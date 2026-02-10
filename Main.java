@@ -1,31 +1,36 @@
-
-import controller.BookController;
-import controller.UserController;
+import Controller.BookController;
+import Controller.CategoryController;
+import Controller.UserController;
 
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        BookController bookCtrl = new BookController();
-        UserController userCtrl = new UserController();
+
+        BookController bookController = new BookController();
+        CategoryController categoryController = new CategoryController();
+        UserController userController =
+                new UserController(bookController, categoryController);
 
         while (true) {
-            System.out.println("""
-                === LIBRARY MANAGEMENT SYSTEM ===
-                1. View all books
-                2. Login
-                0. Exit
-                Choose option:
-                """);
+            System.out.println("=== LIBRARY MANAGEMENT SYSTEM ===");
+            System.out.println("1. View all books");
+            System.out.println("2. Login");
+            System.out.println("0. Exit");
+            System.out.print("Choose option: ");
 
-            int choice = Integer.parseInt(sc.nextLine());
+            int choice = sc.nextInt();
+            sc.nextLine();
 
             switch (choice) {
-                case 1 -> bookCtrl.listBooks();
-                case 2 -> userCtrl.login();
-                case 0 -> System.exit(0);
+                case 1 -> bookController.viewAllBooks();
+                case 2 -> userController.login(sc);
+                case 0 -> {
+                    System.out.println("Goodbye!");
+                    return;
+                }
             }
         }
     }
