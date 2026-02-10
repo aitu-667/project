@@ -1,16 +1,20 @@
+
 package repository;
 
-import config.DBConnection;
-import java.sql.Statement;
+import entity.Category;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryRepository {
 
-    public void add(String name) {
-        try (Statement st = DBConnection.getInstance()
-                .getConnection().createStatement()) {
-            st.execute("INSERT INTO categories(name) VALUES('" + name + "')");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private static final List<Category> categories = new ArrayList<>();
+
+    public void save(Category category) {
+        categories.add(category);
+    }
+
+    public List<Category> findAll() {
+        return categories;
     }
 }
