@@ -1,7 +1,30 @@
 package entity;
 
 public class User {
-    public int id;
-    public String username;
-    public String role;
+
+    private int id;
+    private String username;
+    private String role;
+
+    public User(int id, String username, String role) {
+        this.id = id;
+        this.username = username;
+        this.role = role;
+    }
+
+
+    public User() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getRole() {
+        return role;
+    }
 }
