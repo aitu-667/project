@@ -1,37 +1,34 @@
 package repository;
 
-import config.DBConnection;
-import dto.FullBookDTO;
+import entity.Book;
 
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookRepository {
 
-    public List<FullBookDTO> findAll() {
-        List<FullBookDTO> list = new ArrayList<>();
+    private static final List<Book> books = new ArrayList<>();
 
-        String sql = """
-            SELECT b.id, b.title, c.name AS category
-            FROM books b
-            JOIN categories c ON b.category_id = c.id
-        """;
+    static {
+        books.add(new Book(1, "Harry Potter", "J.K. Rowling", "Fantasy"));
+    }
 
-        try (Statement st = DBConnection.getInstance()
-                .getConnection().createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+    public List<Book> findAll() {
+        return books;
+    }
 
-            while (rs.next()) {
-                FullBookDTO dto = new FullBookDTO();
-                dto.id = rs.getInt("id");
-                dto.title = rs.getString("title");
-                dto.category = rs.getString("category");
-                list.add(dto);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void save(Book book) {
+        books.add(book);
+    }
+
+    public boolean deleteById(int id) {
+        return books.removeIf(b -> b.getId() == id);
+    }
+
+    public Book findById(int id) {
+        for (Book b : books) {
+            if (b.getId() == id) return b;
         }
-        return list;
+        return null;
     }
 }
