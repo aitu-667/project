@@ -356,3 +356,4 @@
         initMarketbarPage();
     });
 })(jQuery);
+// update
